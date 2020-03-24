@@ -1,48 +1,27 @@
-
-# pry(main)> cruiser.hit
-#
-# pry(main)> cruiser.health
-# #=> 2
-#
-# pry(main)> cruiser.hit
-#
-# pry(main)> cruiser.health
-# #=> 1
-#
-# pry(main)> cruiser.sunk?
-# #=> false
-#
-# pry(main)> cruiser.hit
-#
-# pry(main)> cruiser.sunk?
-# #=> true
 class Ship
-attr_reader :name, :length, :health
-  def initialize(name, length)
-    @name = name
-    @length = length
-    @health = health
+  attr_reader :name, :length, :health, :hits
+
+  def initialize(name_of_ship, length_of_ship)
+    @name = name_of_ship
+    @length = length_of_ship
+    @health = length_of_ship
+    @hits = 0
   end
 
   def health
-    @health = @length
-
-   #coming back to this with modifier for subtracting health
-   #this just sets initial value of health
+    @health = @length - @hits
   end
 
   def sunk?
-    if @health > 0
-      false
-    else
+    if @health == 0
       true
+    else
+      false
     end
   end
 
   def hit
-    #require "pry"; binding.pry
-    @health -= 1
-
-    #require "pry"; binding.pry
+    @hits += 1
   end
+
 end
