@@ -1,3 +1,15 @@
+
+
+# pry(main)> cell.fired_upon?
+# # => false
+#
+# pry(main)> cell.fire_upon
+#
+# pry(main)> cell.ship.health
+# # => 2
+#
+# pry(main)> cell.fired_upon?
+# # => true
 class Cell
   attr_reader :coordinate, :ship
 
@@ -17,4 +29,21 @@ class Cell
       false
     end
   end
+
+  def fire_upon
+    require "pry"; binding.pry
+    @ship.health - 1
+    require "pry"; binding.pry
+  end
+
+  def fired_upon?
+    require "pry"; binding.pry
+    if  @ship.health < @ship.length
+      true
+    else
+      false
+    end
+  end
+
+
 end
