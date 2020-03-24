@@ -36,11 +36,9 @@ class Cell
     if empty? == false
       @ship.health - @hits
     end
-    #require "pry"; binding.pry
   end
 
   def fired_upon?
-    #require "pry"; binding.pry
     if  @ship.health - @hits == @ship.length
       false
     else
