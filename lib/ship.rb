@@ -19,7 +19,7 @@ class Ship
       false
     end
   end
-
+  
   def hit
     @hits += 1
   end

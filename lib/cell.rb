@@ -36,6 +36,7 @@ class Cell
     if empty? == false
       @ship.health - @hits
     end
+
   end
 
   def fired_upon?
@@ -46,21 +47,26 @@ class Cell
     end
   end
 
-  def render
-    if @hits > 0
-      if empty? == false && @ship.health - @hits < @ship.length
-       "H"
-      elsif empty? == true
-       "M"
+  def render(visible = false)
+    if visible == false
+      if @hits > 0
+        if empty? == false && @ship.health - @hits < @ship.length
+         "H"
+        elsif empty? == true
+         "M"
+        end
+      elsif @hits > 0 && @ship.health - @hits == 0
+        if empty? == false
+         "X"
+        elsif empty? == true
+         "M"
+        end
+      elsif @hits == 0
+        "."
       end
-    elsif @hits > 0 && @ship.health - @hits == 0
-      if empty? == false
-       "X"
-      elsif empty? == true
-       "M"
-      end
-    elsif @hits == 0
-      "."
+    #require "pry"; binding.pry
+    elsif visible == true && @hits == 0
+      "S"
     end
   end
 
