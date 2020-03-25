@@ -45,6 +45,7 @@ class CellTest < Minitest::Test
     cruiser = Ship.new("Cruiser", 3)
     @cell.place_ship(cruiser)
     @cell.fire_upon
+
     assert_equal true, @cell.fired_upon?
     assert_equal "H", @cell.render
 
@@ -69,7 +70,19 @@ class CellTest < Minitest::Test
     cruiser.hit
 
     assert_equal true, cruiser.sunk?
+    assert_equal "X",  cell_2.render
+  end
 
+  def test_health_declines
+    cruiser = Ship.new("Cruiser", 3)
+    @cell.place_ship(cruiser)
+
+    assert_equal false, @cell.fired_upon?
+
+    @cell.fire_upon
+    assert_equal 2, @cell.ship.health
+
+    assert_equal true,  @cell.fired_upon?
   end
 
 end
