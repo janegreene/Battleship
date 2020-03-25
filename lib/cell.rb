@@ -23,14 +23,6 @@ class Cell
     @ship = ship_name
   end
 
-  # def empty?
-  #   if @ship == nil
-  #     true
-  #   else
-  #     false
-  #   end
-  # end
-
   def fire_upon
     @fired_upon = true
     if @ship != nil
@@ -61,50 +53,4 @@ class Cell
 
   end
 
-  # def render(visible = false)
-  #   if visible == false
-  #     if @hits > 0
-  #       if empty? == false && @ship.health - @hits < @ship.length
-  #        "H"
-  #       elsif empty? == true
-  #        "M"
-  #       end
-  #     elsif @hits > 0 && @ship.health - @hits == 0
-  #       if empty? == false
-  #        "X"
-  #       elsif empty? == true
-  #        "M"
-  #       end
-  #     elsif @hits == 0
-  #       "."
-  #     end
-  #   #require "pry"; binding.pry
-  #   elsif visible == true && @hits == 0
-  #     "S"
-  #   end
-  # end
-
-
-  #
-  # # Indicate that we want to show a ship with the optional argument
-  # pry(main)> cell_2.render(true)
-  # # => "S"
-  #
-  # pry(main)> cell_2.fire_upon
-  #
-  # pry(main)> cell_2.render
-  # # => "H"
-  #
-  # pry(main)> cruiser.sunk?
-  # # => false
-  #
-  # pry(main)> cruiser.hit
-  #
-  # pry(main)> cruiser.hit
-  #
-  # pry(main)> cruiser.sunk?
-  # # => true
-  #
-  # pry(main)> cell_2.render
-  # # => "X"
 end
