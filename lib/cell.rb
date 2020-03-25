@@ -1,15 +1,3 @@
-
-
-# pry(main)> cell.fired_upon?
-# # => false
-#
-# pry(main)> cell.fire_upon
-#
-# pry(main)> cell.ship.health
-# # => 2
-#
-# pry(main)> cell.fired_upon?
-# # => true
 class Cell
   attr_reader :coordinate, :ship
 
@@ -43,7 +31,7 @@ class Cell
       "."
     elsif @fired_upon == true && @ship == nil
       "M"
-    elsif @fired_upon == true && @ship != nil && @ship.health != 0
+    elsif @fired_upon == true && @ship != nil && @ship.health >= 0
       "H"
     elsif @fired_upon == false && @ship != nil && visible
       "S"
