@@ -35,6 +35,8 @@ class Cell
       "H"
     elsif @fired_upon == false && @ship != nil && visible
       "S"
+    elsif @fired_upon == false && @ship == nil && visible
+      "."
     else
       "X"
     end
