@@ -85,4 +85,13 @@ class CellTest < Minitest::Test
     assert_equal true,  @cell.fired_upon?
   end
 
+  def test_visible
+    cell_2 = Cell.new("C3")
+    cruiser = Ship.new("Cruiser", 3)
+    cell_2.place_ship(cruiser)
+    assert_equal "S", cell_2.render(true)
+    cell_7 = Cell.new("D3")
+    assert_equal ".", cell_7.render(true)
+  end
+
 end
