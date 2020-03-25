@@ -45,7 +45,9 @@ class CellTest < Minitest::Test
     cruiser = Ship.new("Cruiser", 3)
     @cell.place_ship(cruiser)
     @cell.fire_upon
+    # require "pry"; binding.pry
     assert_equal true, @cell.fired_upon?
+    # require "pry"; binding.pry
     assert_equal "H", @cell.render
 
     cell_1 = Cell.new("B4")
