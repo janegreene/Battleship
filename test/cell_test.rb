@@ -19,8 +19,10 @@ class CellTest < Minitest::Test
 
   def test_place_ship
     cruiser = Ship.new("Cruiser", 3)
+    @cell.place_ship(cruiser)
 
-    assert_equal cruiser, @cell.place_ship(cruiser)
+    assert_equal "Cruiser", @cell.ship.name
+    assert_equal cruiser, @cell.ship
   end
 
   def test_is_empty?
@@ -67,8 +69,8 @@ class CellTest < Minitest::Test
     assert_equal false, cruiser.sunk?
 
     cruiser.hit
-    cruiser.hit
 
+    cruiser.hit
     assert_equal true, cruiser.sunk?
     assert_equal "X",  cell_2.render
   end

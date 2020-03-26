@@ -27,20 +27,12 @@ class Cell
   end
 
   def render(visible = false)
-    if @fired_upon == false && visible == false
-      "."
-    elsif @fired_upon == true && @ship == nil
-      "M"
-    elsif @fired_upon == true && @ship != nil && @ship.health >= 0
-      "H"
-    elsif @fired_upon == false && @ship != nil && visible
-      "S"
-    elsif @fired_upon == false && @ship == nil && visible
-      "."
-    else
-      "X"
-    end
-
+    return "." if @fired_upon == false && visible == false
+    return "M" if @fired_upon == true && @ship == nil
+    return "H" if @fired_upon == true && @ship != nil && @ship.health > 0
+    return "S" if @fired_upon == false && @ship != nil && visible
+    return "." if @fired_upon == false && @ship == nil && visible
+    return "X" if @ship.health == 0
   end
 
 end
