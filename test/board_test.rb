@@ -15,7 +15,7 @@ class BoardTest < Minitest::Test
 
   def test_cells
     @board.generate_cells
-    
+
     assert_instance_of Hash, @board.cells
     assert_equal 16, @board.cells.length
     assert_instance_of Cell, @board.cells.values.first
@@ -29,19 +29,14 @@ class BoardTest < Minitest::Test
     assert_equal false, @board.valid_coordinate?("E1")
     assert_equal false, @board.valid_coordinate?("A22")
   end
-#pry(main)> board.valid_coordinate?("A1")
-# # => true
-#
-# pry(main)> board.valid_coordinate?("D4")
-# # => true
-#
-# pry(main)> board.valid_coordinate?("A5")
-# # => false
-#
-# pry(main)> board.valid_coordinate?("E1")
-# # => false
-#
-# pry(main)> board.valid_coordinate?("A22")
-# # => false
 
+  def test_valid_coordinate?
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+
+    assert_equal false, @board.valid_placement?(cruiser, ["A1", "A2"])
+  end
+  
+  # pry(main)> board.valid_placement?(submarine, ["A2", "A3", "A4"])
+  # # => false
 end

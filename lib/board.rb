@@ -21,5 +21,8 @@ class Board
     @coordinates.any? do |coordinate|
       coordinate == specified_coordinate
     end
+
+    def valid_coordinate?(ship_object, coordinate_array)
+      end
   end
 end
