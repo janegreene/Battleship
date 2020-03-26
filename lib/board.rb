@@ -21,8 +21,9 @@ class Board
     @coordinates.any? do |coordinate|
       coordinate == specified_coordinate
     end
+  end
 
-    def valid_coordinate?(ship_object, coordinate_array)
-      end
+  def valid_placement?(ship_object, coordinate_array)
+    require "pry"; binding.pry
   end
 end
