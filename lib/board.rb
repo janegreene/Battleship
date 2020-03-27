@@ -49,20 +49,32 @@ class Board
       number_of_coordinate = []
       coordinate_array.each do |coordinate|
         number_of_coordinate << coordinate[1].to_i
+      #  require "pry"; binding.pry
       end
-      number_of_coordinate.each_cons(2).all? do |coordinate_num1,coordinate_num2|
-        coordinate_num2 == coordinate_num1 + 1
-        #trying to see that numbers of coordinates are consecutive ie [1,2,3] or [3,4]
+      answer = nil
+      number_of_coordinate.each_cons(2) do |coordinate_num1, coordinate_num2|
+        answer = ((coordinate_num1 + 1) == coordinate_num2)
       end
     end
+    answer
   end
 
-  # def consecutive_in_column?(ship_object, coordinate_array)
-  #will validate that coordinates are [A,B,C] or [C,D]... consecutive letters
-  #
-  #
-  # end
-  #
+  def coordinates_consecutive_in_column?(ship_object, coordinate_array)
+    if coordinates_are_in_same_column?(ship_object, coordinate_array) == true
+      letter_of_coordinate = []
+      coordinate_array.each do |coordinate|
+        letter_of_coordinate << coordinate[0]
+      end
+      answer = nil
+      letter_of_coordinate.each_cons(2) do |coordinate_letter1, coordinate_letter2|
+        range = coordinate_letter1..coordinate_letter2
+        letter_array = range.to_a
+        answer = (letter_array.length == 2)
+      end
+    end
+    answer
+  end
+
   # def valid_placement?(ship_object, coordinate_array)
    #will use all helper methods above
   #   if ship_length_equal_to_coordinate_length
