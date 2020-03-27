@@ -51,12 +51,14 @@ class Board
         number_of_coordinate << coordinate[1].to_i
       #  require "pry"; binding.pry
       end
-      answer = nil
+      answer = false
       number_of_coordinate.each_cons(2) do |coordinate_num1, coordinate_num2|
         answer = ((coordinate_num1 + 1) == coordinate_num2)
       end
+      answer
+    else
+      false
     end
-    answer
   end
 
   def coordinates_consecutive_in_column?(ship_object, coordinate_array)
@@ -65,22 +67,23 @@ class Board
       coordinate_array.each do |coordinate|
         letter_of_coordinate << coordinate[0]
       end
-      answer = nil
+      answer = false
       letter_of_coordinate.each_cons(2) do |coordinate_letter1, coordinate_letter2|
         range = coordinate_letter1..coordinate_letter2
         letter_array = range.to_a
         answer = (letter_array.length == 2)
       end
+      answer
+    else
+      false
     end
-    answer
   end
-
-  # def valid_placement?(ship_object, coordinate_array)
-   #will use all helper methods above
-  #   if ship_length_equal_to_coordinate_length
-  #     coordinate_array.each do |coordinate|
-  #       coordinate[0][0] == coordinate[1][0]
-  #     end
-  #   end
-  # end
+  def valid_placement?(ship_object, coordinate_array)
+    if ship_length_equals_coordinate_length?(ship_object, coordinate_array) == true
+      return true if coordinates_consecutive_in_column?(ship_object, coordinate_array) == true
+      return true if coordinates_consecutive_in_row?(ship_object, coordinate_array) == true
+      return false else
+    return false 
+    end
+  end
 end
