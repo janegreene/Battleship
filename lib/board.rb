@@ -23,7 +23,38 @@ class Board
     end
   end
 
-  def valid_placement?(ship_object, coordinate_array)
-    require "pry"; binding.pry
+  def ship_length_equals_coordinate_length?(ship_object, coordinate_array)
+    return ship_object.length == coordinate_array.length
   end
+
+  def coordinates_are_in_same_row?(ship_object, coordinate_array)
+    first_letter_of_coordinate = []
+    coordinate_array.each do |coordinate|
+      first_letter_of_coordinate << coordinate[0]
+    end
+    first_letter_of_coordinate.uniq.compact.length == 1
+  end
+
+  def coordinates_are_in_same_column?(ship_object, coordinate_array)
+    number_of_coordinate = []
+    coordinate_array.each do |coordinate|
+      number_of_coordinate << coordinate[1]
+    end
+    number_of_coordinate.uniq.compact.length == 1
+  end
+
+
+  # def consecutive_in_column?(ship_object, coordinate_array)
+  #   if coordinates_are_consecutive_horizontal? &&
+  #
+  #
+  # end
+  #
+  # def valid_placement?(ship_object, coordinate_array)
+  #   if ship_length_equal_to_coordinate_length
+  #     coordinate_array.each do |coordinate|
+  #       coordinate[0][0] == coordinate[1][0]
+  #     end
+  #   end
+  # end
 end
