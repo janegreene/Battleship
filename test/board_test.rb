@@ -47,9 +47,9 @@ class BoardTest < Minitest::Test
     assert_equal true, @board.coordinates_are_in_same_column?(@cruiser, ["A1", "B1"])
   end
 
-  def test_consecutive_in_column?
-  skip
-    assert_equal true, @board.consecutive_in_column?(@submarine, ["A1", "B1"])
+  def test_consecutive_in_row?
+    assert_equal true, @board.coordinates_consecutive_in_row?(@submarine, ["A1", "A2"])
+    assert_equal false, @board.coordinates_consecutive_in_row?(@submarine, ["B1", "B3"])
   end
   # assert_equal false, @board.valid_placement?(@cruiser, ["A1", "A2"])
   #

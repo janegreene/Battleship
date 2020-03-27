@@ -32,7 +32,7 @@ class Board
     coordinate_array.each do |coordinate|
       first_letter_of_coordinate << coordinate[0]
     end
-    first_letter_of_coordinate.uniq.compact.length == 1
+    return first_letter_of_coordinate.uniq.compact.length == 1
   end
 
   def coordinates_are_in_same_column?(ship_object, coordinate_array)
@@ -44,13 +44,27 @@ class Board
   end
 
 
+  def coordinates_consecutive_in_row?(ship_object, coordinate_array)
+    if coordinates_are_in_same_row?(ship_object, coordinate_array) == true
+      number_of_coordinate = []
+      coordinate_array.each do |coordinate|
+        number_of_coordinate << coordinate[1].to_i
+      end
+      number_of_coordinate.each_cons(2).all? do |coordinate_num1,coordinate_num2|
+        coordinate_num2 == coordinate_num1 + 1
+        #trying to see that numbers of coordinates are consecutive ie [1,2,3] or [3,4]
+      end
+    end
+  end
+
   # def consecutive_in_column?(ship_object, coordinate_array)
-  #   if coordinates_are_consecutive_horizontal? &&
+  #will validate that coordinates are [A,B,C] or [C,D]... consecutive letters
   #
   #
   # end
   #
   # def valid_placement?(ship_object, coordinate_array)
+   #will use all helper methods above
   #   if ship_length_equal_to_coordinate_length
   #     coordinate_array.each do |coordinate|
   #       coordinate[0][0] == coordinate[1][0]
