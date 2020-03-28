@@ -112,8 +112,27 @@ class Board
       #.empty? returns true is ship==nil
       # require "pry"; binding.pry
     end
-
   end
-
-
+#jacking around with render...
+  def render(default = nil)
+    #if default = nil
+    @cells.map do |key, value|
+      #match each key to coordinate and show value via render
+      @coordinates[0..3]
+      where coordinate == key
+      value.render
+      # require "pry"; binding.pry
+    end
+    #{ @coordinates[1..3] }
+  # "  1 2 3 4 \n" +
+  # "A "#{}" ". . . \n" +
+  # "B . . . . \n" +
+  # "C . . . . \n" +
+  # "D . . . . \n",
+  # @cells.each do |key, value|
+  # puts key
+  # puts value
+  #@coordinates[1..3]
+  end
+    # require "pry"; binding.pry
 end
