@@ -102,7 +102,7 @@ class Board
       @cells[occupied].place_ship(ship_placed)
     end
   end
-#attempt to build overlap helper method for valid_placement? method.
+  #attempt to build overlap helper method for valid_placement? method.
   # need to work into valid_placement
   def overlap?(prospect_coordinates)
     prospect_coordinates.any? do |prospect|
@@ -113,26 +113,24 @@ class Board
       # require "pry"; binding.pry
     end
   end
-#jacking around with render...
-  def render(default = nil)
-    #if default = nil
-    @cells.map do |key, value|
-      #match each key to coordinate and show value via render
-      @coordinates[0..3]
-      where coordinate == key
-      value.render
-      # require "pry"; binding.pry
-    end
-    #{ @coordinates[1..3] }
-  # "  1 2 3 4 \n" +
-  # "A "#{}" ". . . \n" +
-  # "B . . . . \n" +
-  # "C . . . . \n" +
-  # "D . . . . \n",
-  # @cells.each do |key, value|
-  # puts key
-  # puts value
-  #@coordinates[1..3]
-  end
-    # require "pry"; binding.pry
+  #jacking around with render...
+  # def render(default = nil)
+  #   #if default = nil
+  #   @cells.map do |key, value|
+  #     #match each key to coordinate and show value via render
+  #     @coordinates[0..3].map do |coordinate|
+  #       if key == coordinate
+  #         value.render
+  #       end
+  #     end
+  #     # require "pry"; binding.pry
+  #   end
+  # end
+    # "  1 2 3 4 \n" +
+    # "A "#{@cellsvalue.render}" ". . . \n" +
+    # "B . . . . \n" +
+    # "C . . . . \n" +
+    # "D . . . . \n",
+    #@coordinates[1..3]
+    # puts string_array.join(", ")
 end

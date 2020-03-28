@@ -102,6 +102,7 @@ class BoardTest < Minitest::Test
   end
 
   def test_render #unsure about this having the same name as a method from another class we also have access to...
+    skip
     @board.generate_cells
     @board.place(@cruiser, ["A1", "A2", "A3"])
     assert_equal "  1 2 3 4 \n" +
