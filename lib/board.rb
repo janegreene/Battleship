@@ -83,7 +83,14 @@ class Board
       return true if coordinates_consecutive_in_column?(ship_object, coordinate_array) == true
       return true if coordinates_consecutive_in_row?(ship_object, coordinate_array) == true
       return false else
-    return false 
+    return false
     end
   end
+
+  def place(ship_placed, occupied_coordinates)
+    occupied_coordinates.each do |occupied|
+      @cells[occupied].place_ship(ship_placed)
+    end
+  end
+
 end
