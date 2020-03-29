@@ -102,14 +102,15 @@ class BoardTest < Minitest::Test
   end
 
   def test_render #unsure about this having the same name as a method from another class we also have access to...
-    skip
     @board.generate_cells
+    # @cells.render
+    # require "pry"; binding.pry
     @board.place(@cruiser, ["A1", "A2", "A3"])
-    assert_equal "  1 2 3 4 \n" +
-                 "A . . . . \n" +
-                 "B . . . . \n" +
-                 "C . . . . \n" +
-                 "D . . . . \n", @board.render
+    # assert_equal "  1 2 3 4 \n" +
+    #              "A . . . . \n" +
+    #              "B . . . . \n" +
+    #              "C . . . . \n" +
+    #              "D . . . . \n", @board.render
 
     assert_equal  "  1 2 3 4 \n" +
                   "A S S S . \n" +

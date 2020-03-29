@@ -27,21 +27,21 @@ class Cell
     @fired_upon
   end
 
-  def render(visible = false)
-    if @fired_upon == false && visible == false
+  def render(default = false)
+    if @fired_upon == false && default == false
        @board_output = "."
     elsif @fired_upon == true && @ship == nil
         @board_output = "M"
     elsif @fired_upon == true && @ship != nil && @ship.health > 0
         @board_output = "H"
-    elsif @fired_upon == false && @ship != nil && visible
+    elsif @fired_upon == false && @ship != nil && default
         @board_output =  "S"
-    elsif @fired_upon == false && @ship == nil && visible
+    elsif @fired_upon == false && @ship == nil && default
         @board_output = "."
     elsif @ship.health == 0
         @board_output =  "X"
     end
-    require "pry"; binding.pry
+    # require "pry"; binding.pry
     @board_output
   end
 
