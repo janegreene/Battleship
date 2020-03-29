@@ -114,23 +114,24 @@ class Board
     end
   end
   #jacking around with render...
-  # def render(default = nil)
-  #   #if default = nil
-  #   @cells.map do |key, value|
-  #     #match each key to coordinate and show value via render
-  #     @coordinates[0..3].map do |coordinate|
-  #       if key == coordinate
-  #         value.render
-  #       end
-  #     end
-  #     # require "pry"; binding.pry
-  #   end
-  # end
+  def render(default = nil)
+    #if default = nil
+    require "pry"; binding.pry
+    @cells.map do |key, value|
+      #match each key to coordinate and show value via render
+      @coordinates[0..3].map do |coordinate|
+        if key == coordinate
+          value.render
+        end
+      end
+       # require "pry"; binding.pry
+    end
+  end
     # "  1 2 3 4 \n" +
-    # "A "#{@cellsvalue.render}" ". . . \n" +
+    # "A "#{@cells.value.render}" ". . . \n" +
     # "B . . . . \n" +
     # "C . . . . \n" +
     # "D . . . . \n",
-    #@coordinates[1..3]
+    #@coordinates[0..3]
     # puts string_array.join(", ")
 end
