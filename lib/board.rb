@@ -78,12 +78,59 @@ class Board
       false
     end
   end
+  #WORKING prior to overlap?
+  # def valid_placement?(ship_object, coordinate_array)
+  #   if ship_length_equals_coordinate_length?(ship_object, coordinate_array) == true
+  #     return true if coordinates_consecutive_in_column?(ship_object, coordinate_array) == true
+  #     return true if coordinates_consecutive_in_row?(ship_object, coordinate_array) == true
+  #     return false else
+  #   return false
+  #   end
+  # end
   def valid_placement?(ship_object, coordinate_array)
     if ship_length_equals_coordinate_length?(ship_object, coordinate_array) == true
+      return false if overlap?(coordinate_array) == true #new line had to reorder
       return true if coordinates_consecutive_in_column?(ship_object, coordinate_array) == true
       return true if coordinates_consecutive_in_row?(ship_object, coordinate_array) == true
       return false else
-    return false 
+    return false
     end
   end
+
+  def place(ship_placed, occupied_coordinates)
+    occupied_coordinates.each do |occupied|
+      @cells[occupied].place_ship(ship_placed)
+    end
+  end
+  #attempt to build overlap helper method for valid_placement? method.
+  # need to work into valid_placement
+  def overlap?(prospect_coordinates)
+    prospect_coordinates.any? do |prospect|
+      #.any? returns true if block returns anything other than flasey
+      # require "pry"; binding.pry
+      return true if @cells[prospect].empty? == false
+      #.empty? returns true is ship==nil
+      # require "pry"; binding.pry
+    end
+  end
+  #jacking around with render...
+  # def render(default = nil)
+  #   #if default = nil
+  #   @cells.map do |key, value|
+  #     #match each key to coordinate and show value via render
+  #     @coordinates[0..3].map do |coordinate|
+  #       if key == coordinate
+  #         value.render
+  #       end
+  #     end
+  #     # require "pry"; binding.pry
+  #   end
+  # end
+    # "  1 2 3 4 \n" +
+    # "A "#{@cellsvalue.render}" ". . . \n" +
+    # "B . . . . \n" +
+    # "C . . . . \n" +
+    # "D . . . . \n",
+    #@coordinates[1..3]
+    # puts string_array.join(", ")
 end

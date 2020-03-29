@@ -7,8 +7,8 @@ class Cell
     @fired_upon = false
   end
 
-  def place_ship(ship_name)
-    @ship = ship_name
+  def place_ship(ship_object)
+    @ship = ship_object
   end
 
   def fire_upon

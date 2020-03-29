@@ -60,6 +60,8 @@ class BoardTest < Minitest::Test
   end
 
   def test_valid_placement?
+    @board.generate_cells #added this so the cells would
+    # generate and overlap? method could access @cells empty? method
     assert_equal false, @board.valid_placement?(@cruiser, ["A1", "A2"])
     assert_equal false, @board.valid_placement?(@submarine, ["A2", "A3", "A4"])
     assert_equal false, @board.valid_placement?(@cruiser, ["A1", "A2", "A4"])
@@ -71,7 +73,67 @@ class BoardTest < Minitest::Test
     assert_equal true, @board.valid_placement?(@submarine, ["A1", "A2"])
     assert_equal true, @board.valid_placement?(@cruiser, ["B1", "C1", "D1"])
   end
+    #testing overlap in valid valid_placement in interaction pattern
+  def test_overlap_fuction_of_valid_placement?
+    @board.generate_cells
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+    assert_equal false, @board.valid_placement?(@submarine, ["A1", "B1"])
+  end
 
+  def test_place
+    @board.generate_cells
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+    assert_instance_of Cell , cell_1 = @board.cells["A1"]
+    assert_instance_of Cell , cell_2 = @board.cells["A2"]
+    assert_instance_of Cell , cell_3 = @board.cells["A3"]
+    assert_instance_of Ship , cell_1.ship
+    assert_instance_of Ship , cell_2.ship
+    assert_instance_of Ship , cell_3.ship
+    assert_equal true, cell_3.ship == cell_2.ship
+  end
+  #testing helper method overlap? before mingling with other working code
+  def test_overlap?
+    @board.generate_cells
+    @board.place(@cruiser, ["A1", "A2", "A3"])
 
+    assert_equal true, @board.overlap?(["A1", "B1"])
+    assert_equal true, @board.overlap?(["A2", "B2"])
+    assert_equal false, @board.overlap?(["B1", "C1"])
+  end
 
+  def test_render #unsure about this having the same name as a method from another class we also have access to...
+    skip
+    @board.generate_cells
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+    assert_equal "  1 2 3 4 \n" +
+                 "A . . . . \n" +
+                 "B . . . . \n" +
+                 "C . . . . \n" +
+                 "D . . . . \n", @board.render
+
+    assert_equal  "  1 2 3 4 \n" +
+                  "A S S S . \n" +
+                  "B . . . . \n" +
+                  "C . . . . \n" +
+                  "D . . . . \n", @board.render(true)
+  end
 end
+# pry(main)> require './lib/board'
+# # => true
+#
+# pry(main)> require './lib/ship'
+# # => true
+#
+# pry(main)> board = Board.new
+# # => #<Board:0x00007fcb0f056860...>
+#
+# pry(main)> cruiser = Ship.new("Cruiser", 3)
+# # => #<Ship:0x00007fcb0f0573f0...>
+#
+# pry(main)> board.place(cruiser, ["A1", "A2", "A3"])
+#
+# pry(main)> board.render
+# # => "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n"
+#
+# pry(main)> board.render(true)
+# # => "  1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n"
