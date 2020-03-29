@@ -26,13 +26,12 @@ class Cell
     @fired_upon
   end
 
-  def render(visible = false)
-    return "." if @fired_upon == false && visible == false
+  def render(default = false)
+    return "." if @fired_upon == false && default == false
     return "M" if @fired_upon == true && @ship == nil
     return "H" if @fired_upon == true && @ship != nil && @ship.health > 0
-    return "S" if @fired_upon == false && @ship != nil && visible
-    return "." if @fired_upon == false && @ship == nil && visible
+    return "S" if @fired_upon == false && @ship != nil && default
+    return "." if @fired_upon == false && @ship == nil && default
     return "X" if @ship.health == 0
   end
-
 end

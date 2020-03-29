@@ -78,18 +78,10 @@ class Board
       false
     end
   end
-  #WORKING prior to overlap?
-  # def valid_placement?(ship_object, coordinate_array)
-  #   if ship_length_equals_coordinate_length?(ship_object, coordinate_array) == true
-  #     return true if coordinates_consecutive_in_column?(ship_object, coordinate_array) == true
-  #     return true if coordinates_consecutive_in_row?(ship_object, coordinate_array) == true
-  #     return false else
-  #   return false
-  #   end
-  # end
+
   def valid_placement?(ship_object, coordinate_array)
     if ship_length_equals_coordinate_length?(ship_object, coordinate_array) == true
-      return false if overlap?(coordinate_array) == true #new line had to reorder
+      return false if overlap?(coordinate_array) == true
       return true if coordinates_consecutive_in_column?(ship_object, coordinate_array) == true
       return true if coordinates_consecutive_in_row?(ship_object, coordinate_array) == true
       return false else
@@ -102,35 +94,28 @@ class Board
       @cells[occupied].place_ship(ship_placed)
     end
   end
-  #attempt to build overlap helper method for valid_placement? method.
-  # need to work into valid_placement
+
   def overlap?(prospect_coordinates)
     prospect_coordinates.any? do |prospect|
-      #.any? returns true if block returns anything other than flasey
-      # require "pry"; binding.pry
       return true if @cells[prospect].empty? == false
-      #.empty? returns true is ship==nil
-      # require "pry"; binding.pry
     end
   end
-  #jacking around with render...
-  # def render(default = nil)
-  #   #if default = nil
-  #   @cells.map do |key, value|
-  #     #match each key to coordinate and show value via render
-  #     @coordinates[0..3].map do |coordinate|
-  #       if key == coordinate
-  #         value.render
-  #       end
-  #     end
-  #     # require "pry"; binding.pry
-  #   end
-  # end
-    # "  1 2 3 4 \n" +
-    # "A "#{@cellsvalue.render}" ". . . \n" +
-    # "B . . . . \n" +
-    # "C . . . . \n" +
-    # "D . . . . \n",
-    #@coordinates[1..3]
-    # puts string_array.join(", ")
+
+  def render(default = false)
+    if default == true
+      line_numbers = "  1 2 3 4" + "\n"
+      line_a = "A #{@cells["A1"].render(true)} #{@cells["A2"].render(true)} #{@cells["A3"].render(true)} #{@cells["A4"].render(true)}" + "\n"
+      line_b = "B #{@cells["B1"].render(true)} #{@cells["B2"].render(true)} #{@cells["B3"].render(true)} #{@cells["B4"].render(true)}" + "\n"
+      line_c = "C #{@cells["C1"].render(true)} #{@cells["C2"].render(true)} #{@cells["C3"].render(true)} #{@cells["C4"].render(true)}" + "\n"
+      line_d = "D #{@cells["D1"].render(true)} #{@cells["D2"].render(true)} #{@cells["D3"].render(true)} #{@cells["D4"].render(true)}" + "\n"
+    else
+      line_numbers = "  1 2 3 4" + "\n"
+      line_a = "A #{@cells["A1"].render} #{@cells["A2"].render} #{@cells["A3"].render} #{@cells["A4"].render}" + "\n"
+      line_b = "B #{@cells["B1"].render} #{@cells["B2"].render} #{@cells["B3"].render} #{@cells["B4"].render}" + "\n"
+      line_c = "C #{@cells["C1"].render} #{@cells["C2"].render} #{@cells["C3"].render} #{@cells["C4"].render}" + "\n"
+      line_d = "D #{@cells["D1"].render} #{@cells["D2"].render} #{@cells["D3"].render} #{@cells["D4"].render}" + "\n"
+    end
+    row_render = line_numbers + line_a +  line_b +  line_c +  line_d
+    return row_render
+  end
 end
