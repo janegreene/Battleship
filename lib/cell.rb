@@ -1,11 +1,10 @@
 class Cell
-  attr_reader :coordinate, :ship, :board_output
+  attr_reader :coordinate, :ship
 
   def initialize(coordinate)
     @coordinate = coordinate
     @ship = nil
     @fired_upon = false
-    @board_output = "."
   end
 
   def place_ship(ship_object)
@@ -28,21 +27,11 @@ class Cell
   end
 
   def render(default = false)
-    if @fired_upon == false && default == false
-       @board_output = "."
-    elsif @fired_upon == true && @ship == nil
-        @board_output = "M"
-    elsif @fired_upon == true && @ship != nil && @ship.health > 0
-        @board_output = "H"
-    elsif @fired_upon == false && @ship != nil && default
-        @board_output =  "S"
-    elsif @fired_upon == false && @ship == nil && default
-        @board_output = "."
-    elsif @ship.health == 0
-        @board_output =  "X"
-    end
-    # require "pry"; binding.pry
-    @board_output
+    return "." if @fired_upon == false && default == false
+    return "M" if @fired_upon == true && @ship == nil
+    return "H" if @fired_upon == true && @ship != nil && @ship.health > 0
+    return "S" if @fired_upon == false && @ship != nil && default
+    return "." if @fired_upon == false && @ship == nil && default
+    return "X" if @ship.health == 0
   end
-
 end
