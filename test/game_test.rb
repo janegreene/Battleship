@@ -17,6 +17,10 @@ class GameTest < Minitest::Test
   def test_it_exists
     assert_instance_of Game, @game
   end
+
+  def test_game_start
+    
+  end
 end
 # Main Menu:
 # Welcome to BATTLESHIP
