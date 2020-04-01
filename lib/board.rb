@@ -8,6 +8,7 @@ class Board
         "B1", "B2", "B3", "B4",
         "C1", "C2", "C3", "C4",
         "D1", "D2", "D3", "D4"]
+        generate_cells #need to check on tests
   end
 
   def generate_cells
