@@ -4,14 +4,27 @@ require './lib/cell'
 require './lib/ship'
 require './lib/board'
 require './lib/turn'
+require './lib/game'
 
 
 class TurnTest < Minitest::Test
-  def test_it_can_take_players
-    user = Player
+
+  def test_it_exists
+    turn1 = Turn.new
+    assert_instance_of Turn, turn1
   end
 
+  def test_computer_shot
+  skip
+  end
 
+  def test_user_shot
+  skip
+  end
+
+  def report_results
+  skip
+  end
 end
 
 # Turn:

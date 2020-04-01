@@ -24,10 +24,10 @@ class Game
     p "Enter p to play. Enter q to quit."
     @user_input = user_input_start
     if @user_input == "p"
-      computer_board_initial_render
+      computer_place_cruiser
       # play_game #this method is pending!!!!!!!!!!!
     elsif @user_input == "q"
-      end_game #this method is pending!!!!!!!!!!!
+      end_game
     else
       p "Enter p to play. Enter q to quit."
       @user_input = user_input_start
@@ -79,24 +79,54 @@ class Game
     puts @user_board.render(true)
   end
 
-  # def play_game
-  #     # start the game
-  #     #create computers_board & user_board
-  #     #place ships
-  #
-  #     end
-  # end
-  def computer_board_initial_render
+
+  def computer_place_cruiser
       possible_coordinates_cruiser = [['A1', 'A2', 'A3'], ['A2','A3','A4'], ['B1', 'B2', 'B3'], ['B2','B3','B4'], ['C1', 'C2', 'C3'], ['C2','C3','C4'], ['D1', 'D2', 'D3'], ['D2','D3','D4'], ['A1', 'B1', 'C1'], ['A2', 'B2', 'C2'], ['A3', 'B3', 'C3'], ['A4', 'B4', 'C4'], ['B1', 'C1', 'D1'], ['B2', 'C2', 'D2'], ['B3', 'C3', 'D3'], ['B4', 'C4', 'D4']]
-      possible_coordinates_sub = [['A1', 'A2'], ['B1', 'B2'], ['C1', 'C2'], ['D1', 'D2'], ['A2', 'A3'], ['B2', 'B3'], ['C2', 'C3'], ['D2', 'D3'], ['A3', 'A4'], ['B3', 'B4'], ['C3', 'C4'], ['D3', 'D4'], ['A1', 'B1'], ['B1', 'C1'], ['C1', 'D1'], ['A2', 'B2'], ['B2', 'C2'], ['C2', 'D2'], ['A3', 'B3'], ['B3', 'C3'], ['C3', 'D3'], ['A4', 'B4'], ['B4', 'C4'], ['C4', 'D4']]
-    if @computers_board.overlap?(possible_coordinates_sub.sample) == false
-      # require "pry"; binding.pry
-      @computers_board.place(@computer_submarine, possible_coordinates_sub.sample)
-    elsif @computers_board.overlap?(possible_coordinates_cruiser.sample) == false
+    if @computers_board.overlap?(possible_coordinates_cruiser.sample) == false
       @computers_board.place(@computer_cruiser, possible_coordinates_cruiser.sample)
     end
-    puts @computers_board.render(true)
+    @computers_board.render
+    computer_place_sub
+  end
+
+  def computer_place_sub
+    possible_coordinates_sub = [['A1', 'A2'], ['B1', 'B2'], ['C1', 'C2'], ['D1', 'D2'], ['A2', 'A3'], ['B2', 'B3'], ['C2', 'C3'], ['D2', 'D3'], ['A3', 'A4'], ['B3', 'B4'], ['C3', 'C4'], ['D3', 'D4'], ['A1', 'B1'], ['B1', 'C1'], ['C1', 'D1'], ['A2', 'B2'], ['B2', 'C2'], ['C2', 'D2'], ['A3', 'B3'], ['B3', 'C3'], ['C3', 'D3'], ['A4', 'B4'], ['B4', 'C4'], ['C4', 'D4']]
+    if @computers_board.valid_coordinate?(possible_coordinates_sub.sample) == false
+      @computers_board.place(@computer_submarine, possible_coordinates_sub.sample)
+    end
+    @computers_board.render
     sleep(2)
     player_cruise_placement
+  end
+
+  def turn
+    while @user_submarine.sunk? && @user_cruiser.sunk? == false || @computer_submarine.sunk? && @computer_cruiser.sunk? == false
+     render_boards_for_turn
+    end
+  end
+
+  def render_boards_for_turn
+    puts @computers_board.render
+    puts @user_board.render(true)
+    player_shot
+  end
+
+  def player_shot
+    p 'Enter the coordinate for your shot:'
+    user_shot = gets.chomp
+    #if user_shot
+    #where we left off last night!!
+
+  end
+
+
+  def end_game
+
+    puts "Game over..."
+    sleep (2)
+    puts ".."
+    sleep (2)
+    puts "bye felicia"
+
   end
 end
