@@ -15,11 +15,16 @@ class GameTest < Minitest::Test
   end
 
   def test_it_exists
+    require "pry"; binding.pry
     assert_instance_of Game, @game
   end
 
   def test_game_start
-    
+    skip
+  end
+  def test_player_ship_placement
+    @game.player_ship_placement
+
   end
 end
 # Main Menu:
