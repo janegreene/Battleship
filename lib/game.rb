@@ -13,7 +13,7 @@ class Game
   end
 
   def q_anywhere_quit_game
-    if @user_input.include?("q" || "quit")
+    if @user_input.include?("q" || "quit" || "Q")
       end_game
     end
   end
@@ -154,10 +154,10 @@ class Game
 
   def computer_place_cruiser
       possible_coordinates_cruiser = [['A1', 'A2', 'A3'], ['A2','A3','A4'], ['B1', 'B2', 'B3'], ['B2','B3','B4'], ['C1', 'C2', 'C3'], ['C2','C3','C4'], ['D1', 'D2', 'D3'], ['D2','D3','D4'], ['A1', 'B1', 'C1'], ['A2', 'B2', 'C2'], ['A3', 'B3', 'C3'], ['A4', 'B4', 'C4'], ['B1', 'C1', 'D1'], ['B2', 'C2', 'D2'], ['B3', 'C3', 'D3'], ['B4', 'C4', 'D4']]
-    if @computers_board.overlap?(possible_coordinates_cruiser.sample) == false
+    # if @computers_board.overlap?(possible_coordinates_cruiser.sample) == false
       @computers_board.place(@computer_cruiser, possible_coordinates_cruiser.sample)
-    end
-    @computers_board.render
+
+    puts @computers_board.render(true) #just for show!!!!!!!!!!!!remove puts and true
     computer_place_sub
   end
 
@@ -166,42 +166,102 @@ class Game
     if @computers_board.valid_coordinate?(possible_coordinates_sub.sample) == false
       @computers_board.place(@computer_submarine, possible_coordinates_sub.sample)
     end
-    @computers_board.render
+    puts @computers_board.render(true) #just for show!!!!!! remove puts and true
     player_place_message_cruiser
   end
-
-
-  def render_boards_for_turn
-    puts @computers_board.render
-    puts @user_board.render(true)
-    player_shot
-  end
-
-  def player_shot
-    p 'Enter the coordinate for your shot:'
-    @user_input = gets.chomp.upcase
-    q_anywhere_quit_game
-    if @user_input
-    end
-
-    #if user_shot
-    #where we left off last night!!
-  end
-
   def turn_start
     puts "=============COMPUTER BOARD============="
     puts @computers_board.render
     puts "==============PLAYER BOARD=============="
     puts @user_board.render(true)
-    player_shot
+    # if @user_cruiser.health == 0 && @user_submarine.health == 0 #both ships are sunk name a winner then end game
+    #   player_shot
+    # end
+    are_we_done_yet_user
   end
 
-  def turn
-    while @user_submarine.sunk? && @user_cruiser.sunk? == false || @computer_submarine.sunk? && @computer_cruiser.sunk? == false
-      render_boards_for_turn
+  def are_we_done_yet_user
+    if @user_cruiser.health == 0 && @user_submarine.health == 0 #both ships are sunk name a winner then end game
+      puts "I sunk all your ships...I win."
+      end_game
+    else
+      are_we_done_yet_computer
+    end
+  end
+  def are_we_done_yet_computer
+    if @computer_cruiser.health == 0 && @computer_submarine.health == 0 #both ships are sunk name a winner then end game
+      puts "You sunk all my ships...you win."
+      end_game
+    else
+      player_shot
     end
   end
 
+  # def render_boards_for_turn
+  #   puts @computers_board.render
+  #   puts @user_board.render(true)
+  #   player_shot
+  # end
+
+  def player_shot
+    p 'Enter the coordinate for your shot:'
+    @user_input = gets.chomp.upcase
+    q_anywhere_quit_game
+    if @computers_board.valid_coordinate?(@user_input) == false
+      puts "Please enter a valid coordinate:"
+      player_shot
+    elsif @computers_board.cells[@user_input].fired_upon? == false
+      @computers_board.cells[@user_input].fire_upon
+      computer_shot
+    else
+      puts "You already shot there silly goose!"
+      player_shot
+    end
+
+  end
+
+  def computer_shot
+    shot = @user_board.coordinates.sample
+    if @user_board.cells[shot].fired_upon? == false
+      @user_board.cells[shot].fire_upon
+    else
+      computer_shot
+      # @user_board.coordinates.delete(shot)
+    end
+    computer_results_display(shot)
+  end
+
+  def user_results_display
+    if @computers_board.cells[@user_input].ship == nil
+      puts "Your shot on #{@user_input} was a miss."
+    elsif @computers_board.cells[@user_input].ship != nil && @computers_board.cells[@user_input].ship.health > 0
+      puts "Your shot on #{@user_input} was a hit."
+    elsif @computers_board.cells[@user_input].ship != nil && @computers_board.cells[@user_input].ship.health == 0
+      puts "Your shot on #{@user_input} sunk my ship."
+    else
+      "you broke it"
+    end
+    sleep(2)
+    turn_start
+  end
+
+  def computer_results_display(shot)
+    if @user_board.cells[shot].ship == nil
+      puts "My shot on #{shot} was a miss."
+    elsif @user_board.cells[shot].ship != nil && @user_board.cells[shot].ship.health > 0
+      puts "My shot on #{shot} was a hit."
+    elsif @user_board.cells[shot].ship != nil && @user_board.cells[shot].ship.health == 0
+      puts "My shot on #{shot} sunk your ship."
+    else
+      "we broke it"
+    end
+    user_results_display
+  end
+  # def turn
+  #   while @user_submarine.sunk? && @user_cruiser.sunk? == false || @computer_submarine.sunk? && @computer_cruiser.sunk? == false
+  #     render_boards_for_turn
+  #   end
+  # end
 
   def end_game
 
