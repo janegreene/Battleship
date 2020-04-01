@@ -10,7 +10,12 @@ class Game
     @user_submarine = Ship.new("Submarine", 2)
     @computer_cruiser = Ship.new("Cruiser", 3)
     @computer_submarine = Ship.new("Submarine", 2)
+  end
 
+  def q_anywhere_quit_game
+    if @user_input.include?("q" || "quit")
+      end_game
+    end
   end
 
   def user_input_start
@@ -40,44 +45,111 @@ class Game
     p "The Cruiser is three units long and the Submarine is two units long."
     puts @user_board.render
     p "Enter the squares for the Cruiser (3 spaces):"
+    player_cruise_placement
   end
 
   def player_cruise_placement
-    player_place_message_cruiser
     cruiser_cell_a = gets.chomp
     cruiser_cell_b = gets.chomp
     cruiser_cell_c = gets.chomp
     cruiser_hopeful_placement = [cruiser_cell_a, cruiser_cell_b, cruiser_cell_c]
-    placements_are_valid = cruiser_hopeful_placement.all? do |placement|
-      @user_board.valid_coordinate?(placement)
-    end
-    if !placements_are_valid
-       puts "Those are invalid coordinates. Please try again:"
-       player_cruise_placement
-    elsif placements_are_valid && @user_board.valid_placement?(@user_cruiser, cruiser_hopeful_placement)
-      @user_board.place(@user_cruiser, cruiser_hopeful_placement)
-    end
-    puts @user_board.render(true)
-    sleep(1)
-    player_submarine_placement
+
+    @user_input = cruiser_hopeful_placement
+    q_anywhere_quit_game
+    validating_coordinates(cruiser_hopeful_placement)
   end
 
+
+  def validating_coordinates(cruiser_hopeful_coordinates)
+    coordinates_are_valid = cruiser_hopeful_coordinates.all? do |placement|
+      @user_board.valid_coordinate?(placement)
+    end
+      if !coordinates_are_valid
+        puts "Those are invalid coordinates. Please try again:"
+        player_cruise_placement
+      else
+        validating_placement(cruiser_hopeful_coordinates)
+      end
+  end
+
+  def validating_placement(cruiser_hopeful_placement)
+    placements_are_valid = @user_board.valid_placement?(@user_cruiser, cruiser_hopeful_placement)
+
+    if !placements_are_valid
+      puts "Those are invalid coordinates. Please try again:"
+      player_cruise_placement
+    elsif placements_are_valid && @user_board.valid_placement?(@user_cruiser, cruiser_hopeful_placement)
+      place_ship(@user_cruiser, cruiser_hopeful_placement)
+    end
+  end
+
+
+  def place_ship(ship, cruiser_hopeful_placement)
+    @user_board.place(@user_cruiser, cruiser_hopeful_placement)
+      puts @user_board.render(true)
+    player_submarine_placement
+  end
+######
   def player_submarine_placement
     p "Enter the squares for the Submarine (2 spaces):"
     submarine_cell_a = gets.chomp
     submarine_cell_b = gets.chomp
-    submarine_hopeful_placement = [submarine_cell_a, submarine_cell_b]
-    placements_are_valid = submarine_hopeful_placement.all? do |placement|
+    submarine_hopeful_coordinates = [submarine_cell_a, submarine_cell_b]
+
+    @user_input = submarine_hopeful_coordinates
+    q_anywhere_quit_game
+    validating_coordinates_submarine(submarine_hopeful_coordinates)
+  end
+    ####
+  def validating_coordinates_submarine(submarine_hopeful_coordinates)
+    coordinates_are_valid =submarine_hopeful_coordinates.all? do |placement|
       @user_board.valid_coordinate?(placement)
     end
-    if !placements_are_valid
-       puts "Those are invalid coordinates. Please try again:"
-       player_submarine_placement
-    elsif placements_are_valid && @user_board.valid_placement?(@user_submarine, submarine_hopeful_placement)
-      @user_board.place(@user_submarine, submarine_hopeful_placement)
-    end
-    puts @user_board.render(true)
+      if !coordinates_are_valid
+        puts "Those are invalid coordinates. Please try again:"
+        player_submarine_placement
+      else
+        validating_placement_submarine(submarine_hopeful_coordinates)
+      end
   end
+
+  def validating_placement_submarine(submarine_hopeful_coordinates)
+    placements_are_valid = @user_board.valid_placement?(@user_submarine, submarine_hopeful_coordinates)
+
+    if !placements_are_valid
+      puts "Those are invalid coordinates. Please try again:"
+      player_submarine_placement
+    elsif placements_are_valid && @user_board.valid_placement?(@user_submarine, submarine_hopeful_coordinates)
+      place_submarine(@user_submarine, submarine_hopeful_coordinates)
+    end
+  end
+
+
+  def place_submarine(ship, submarine_hopeful_placement)
+    @user_board.place(@user_submarine, submarine_hopeful_placement)
+      puts @user_board.render(true)
+    turn_start
+  end
+  #####
+    # coordinates_are_valid = submarine_hopeful_placement.all? do |placement|
+    #   @user_board.valid_coordinate?(placement)
+    # end
+    # if  !coordinates_are_valid
+    #     puts "Those are invalid coordinates. Please try again:"
+    #     player_submarine_placement
+    # end
+
+    # placements_are_valid = @user_board.valid_placement?(@user_submarine, submarine_hopeful_placement)
+    #
+    # if !placements_are_valid || !coordinates_are_valid
+    #    puts "Those are invalid coordinates. Please try again:"
+    #    player_submarine_placement
+    # elsif placements_are_valid && @user_board.valid_placement?(@user_submarine, submarine_hopeful_placement)
+    #   @user_board.place(@user_submarine, submarine_hopeful_placement)
+    # end
+    # puts @user_board.render(true)
+    # turn_start
+
 
 
   def computer_place_cruiser
@@ -95,15 +167,9 @@ class Game
       @computers_board.place(@computer_submarine, possible_coordinates_sub.sample)
     end
     @computers_board.render
-    sleep(2)
-    player_cruise_placement
+    player_place_message_cruiser
   end
 
-  def turn
-    while @user_submarine.sunk? && @user_cruiser.sunk? == false || @computer_submarine.sunk? && @computer_cruiser.sunk? == false
-     render_boards_for_turn
-    end
-  end
 
   def render_boards_for_turn
     puts @computers_board.render
@@ -113,20 +179,36 @@ class Game
 
   def player_shot
     p 'Enter the coordinate for your shot:'
-    user_shot = gets.chomp
+    @user_input = gets.chomp.upcase
+    q_anywhere_quit_game
+    if @user_input
+    end
+
     #if user_shot
     #where we left off last night!!
+  end
 
+  def turn_start
+    puts "=============COMPUTER BOARD============="
+    puts @computers_board.render
+    puts "==============PLAYER BOARD=============="
+    puts @user_board.render(true)
+    player_shot
+  end
+
+  def turn
+    while @user_submarine.sunk? && @user_cruiser.sunk? == false || @computer_submarine.sunk? && @computer_cruiser.sunk? == false
+      render_boards_for_turn
+    end
   end
 
 
   def end_game
 
     puts "Game over..."
-    sleep (2)
     puts ".."
-    sleep (2)
+    sleep (1)
     puts "bye felicia"
-
+    game_start
   end
 end
