@@ -151,8 +151,6 @@ class Game
     else
       computer_place_sub
     end
-    # puts @computers_board.render(true)
-    # player_place_message_cruiser
   end
 
   def turn_start
@@ -160,7 +158,7 @@ class Game
     puts "=============COMPUTER'S BOARD============="
     puts @computers_board.render
     puts "\n"
-    puts "==============MY BOARD=============="
+    puts "=================MY BOARD================="
     puts @user_board.render(true)
     puts "\n"
     puts "\n"
@@ -244,8 +242,8 @@ class Game
   def end_game
     puts "\n"
     puts "Game over..."
-    puts "."
-    puts "."
+    puts "\n"
+    puts "\n"
     sleep (1)
     puts "bye felicia"
     puts "\n"
