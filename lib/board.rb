@@ -8,7 +8,7 @@ class Board
         "B1", "B2", "B3", "B4",
         "C1", "C2", "C3", "C4",
         "D1", "D2", "D3", "D4"]
-        generate_cells #need to check on tests
+        generate_cells
   end
 
   def generate_cells
@@ -50,7 +50,7 @@ class Board
       number_of_coordinate = []
       coordinate_array.each do |coordinate|
         number_of_coordinate << coordinate[1].to_i
-      #  require "pry"; binding.pry
+    
       end
       answer = false
       number_of_coordinate.each_cons(2) do |coordinate_num1, coordinate_num2|
